@@ -8,3 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: pwd
+      # Home dir is `/home/runner/work/test-actions/test-actions`
+      - run: mkdir -p uploaded-artifacts
+      - run: echo hello > uploaded-artifacts/world.txt
+      - run: ls -lhat
+      - uses: actions/upload-artifact@v7
+        with:
+          name: da-artifact
+          path: uploaded-artifacts/world.txt
