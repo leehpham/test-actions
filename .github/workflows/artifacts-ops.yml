@@ -1,0 +1,10 @@
+name: Artifacts Ops
+
+on:
+  workflow_dispatch:
+
+jobs:
+  upload-artifact:
+    runs-on: ubuntu-latest
+    steps:
+      - run: pwd
