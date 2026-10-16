@@ -3,6 +3,9 @@ name: Artifacts Ops
 on:
   workflow_dispatch:
 
+env:
+  ARTIFACT_NAME: da-artifact
+
 jobs:
   upload-artifact:
     runs-on: ubuntu-latest
@@ -11,8 +14,18 @@ jobs:
       # Home dir is `/home/runner/work/test-actions/test-actions`
       - run: mkdir -p uploaded-artifacts
       - run: echo hello > uploaded-artifacts/world.txt
-      - run: ls -lhat
+      - run: ls -lhaR
       - uses: actions/upload-artifact@v7
         with:
-          name: da-artifact
+          name: ${{ env.ARTIFACT_NAME }}
           path: uploaded-artifacts/world.txt
+
+  read-artifact:
+    runs-on: ubuntu-latest
+    needs: upload-artifact
+    steps:
+      - run: pwd
+      - uses: actions/download-artifact@v8
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+      - run: ls -lhaR
